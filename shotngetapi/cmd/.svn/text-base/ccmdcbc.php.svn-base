@@ -1,0 +1,187 @@
+<?php
+
+if(isset($init_flag) == false)
+	die;
+	
+/**
+* 
+**/
+class CCmdCBC extends CCmd {
+	// ********************************************************************************************
+	const TYPE_SIGN 		= 'SIGN';
+	const TYPE_CIPHER 		= 'CIPHER';
+	const TYPE_UNCIPHER 	= 'UNCIPHER';
+	const TYPE_HASH 		= 'HASH';
+
+	const ALGO_RSA 			= "RSA";
+	const ALGO_DES3 		= "DES3";
+	const ALGO_AES 			= "AES";
+	
+	const HASH_SAH1 		= "SHA1";
+	const HASH_SAH256		= "SHA256";
+	
+	const PADDING_PKCS1		= "PKCS1";
+	const PADDING_OAEP		= "OAEP";
+	const PADDING_NOPADDING	= "NOPADDING";
+	
+	// ********************************************************************************************
+	private $type;
+	private $algo;
+	private $hash;
+	private $padding;
+	private $fileId;
+	private $paramId;
+
+	private $data;
+	
+	// ********************************************************************************************
+	/**
+	**/
+	public function __construct() {
+		parent::setValue(CCmd::CMD_CBC);
+		
+		CDebugger::$debug->tracein('__construct', 'CCmdCBC');
+
+		CDebugger::$debug->traceout(true);
+	}
+	
+	public function fromXml($node){
+		CDebugger::$debug->tracein('fromXml', 'CCmdCBC');
+		
+		$xmlType = $node->getElementsByTagName('TYPE');
+		if($xmlType->length == 1 && $xmlType->item(0)->firstChild != null)
+		{
+			$type = utf8_decode($xmlType->item(0)->firstChild->nodeValue);
+			$this->type = $type;
+		}
+
+		$xmlAlgo = $node->getElementsByTagName('ALGO');
+		if($xmlAlgo->length == 1 && $xmlAlgo->item(0)->firstChild != null)
+		{
+			$algo = utf8_decode($xmlAlgo->item(0)->firstChild->nodeValue);
+			$this->algo = $algo;
+		}
+
+		$xmlHash = $node->getElementsByTagName('HASH');
+		if($xmlHash->length == 1 && $xmlHash->item(0)->firstChild != null)
+		{
+			$hash = utf8_decode($xmlHash->item(0)->firstChild->nodeValue);
+			$this->hash = $hash;
+		}
+
+		$xmlPadding = $node->getElementsByTagName('PADDING');
+		if($xmlPadding->length == 1 && $xmlPadding->item(0)->firstChild != null)
+		{
+			$padding = utf8_decode($xmlPadding->item(0)->firstChild->nodeValue);
+			$this->padding = $padding;
+		}
+
+		$xmlFileId = $node->getElementsByTagName('ID');
+		if($xmlFileId->length == 1 && $xmlFileId->item(0)->firstChild != null)
+		{
+			$fileId = utf8_decode($xmlFileId->item(0)->firstChild->nodeValue);
+			$this->fileId = $fileId;
+		}
+
+		$xmlParamId = $node->getElementsByTagName('IDPARAM');
+		if($xmlParamId->length == 1 && $xmlParamId->item(0)->firstChild != null)
+		{
+			$paramId = utf8_decode($xmlParamId->item(0)->firstChild->nodeValue);
+			$this->paramId = $paramId;
+		}
+
+		$xmlData = $node->getElementsByTagName('DATA');
+		if($xmlData->length == 1 && $xmlData->item(0)->firstChild != null)
+		{
+			$data = utf8_decode($xmlData->item(0)->firstChild->nodeValue);
+			$this->data = $data;
+		}
+
+		CDebugger::$debug->traceout(true);
+	}
+	
+	// ********************************************************************************************
+	public function serializer(&$dom, $kpub) {
+		CDebugger::$debug->tracein('serializer', 'CCmdCBC');
+		
+		$xmlCmd = $dom->createElement('CMD');
+		$xmlCmd->setAttribute('VALUE', parent::getValue());
+
+		if($this->type != null) {
+			$xmlType = $dom->createElement('TYPE');
+			$type = utf8_encode($this->type);
+			$xmlType->appendChild($dom->createTextNode($type));
+			$xmlCmd->appendChild($xmlType);
+		}
+
+		if($this->algo != null) {
+			$xmlAlgo = $dom->createElement('ALGO');
+			$algo = utf8_encode($this->algo);
+			$xmlAlgo->appendChild($dom->createTextNode($algo));
+			$xmlCmd->appendChild($xmlAlgo);
+		}
+
+		if($this->hash != null) {
+			$xmlHash = $dom->createElement('HASH');
+			$hash = utf8_encode($this->hash);
+			$xmlHash->appendChild($dom->createTextNode($hash));
+			$xmlCmd->appendChild($xmlHash);
+		}
+
+		if($this->padding != null) {
+			$xmlPadding = $dom->createElement('PADDING');
+			$padding = utf8_encode($this->padding);
+			$xmlPadding->appendChild($dom->createTextNode($padding));
+			$xmlCmd->appendChild($xmlPadding);
+		}
+
+		if($this->fileId != null) {
+			$xmlFileId = $dom->createElement('ID');
+			$fileId = utf8_encode($this->fileId);
+			$xmlFileId->appendChild($dom->createTextNode($fileId));
+			$xmlCmd->appendChild($xmlFileId);
+		}
+
+		if($this->paramId != null) {
+			$xmlParamId = $dom->createElement('IDPARAM');
+			$paramId = utf8_encode($this->paramId);
+			$xmlParamId->appendChild($dom->createTextNode($paramId));
+			$xmlCmd->appendChild($xmlParamId);
+		}
+
+		if($this->data != null) {
+			$xmlData = $dom->createElement('DATA');
+			$data = utf8_encode($this->data);
+			$xmlData->appendChild($dom->createTextNode($data));
+			$xmlCmd->appendChild($xmlData);
+		}
+
+		CDebugger::$debug->traceout(true);
+		return $xmlCmd;
+	}
+	
+	// ********************************************************************************************
+	public function getType() { return $this->type; }
+	public function setType($type) { $this->type = $type; }
+
+	public function getAlgo() { return $this->algo; }
+	public function setAlgo($algo) { $this->algo = $algo; }
+
+	public function getHash() { return $this->hash; }
+	public function setHash($hash) { $this->hash = $hash; }
+
+	public function getPadding() { return $this->padding; }
+	public function setPadding($padding) { $this->padding = $padding; }
+
+	public function getFileId() { return $this->fileId; }
+	public function setFileId($fileId) { $this->fileId = $fileId; }
+
+	public function getParamId() { return $this->paramId; }
+	public function setParamId($paramId) { $this->paramId = $paramId; }
+
+	public function getData() { return $this->data; }
+	public function setData($data) { $this->data = $data; }
+	
+}
+
+?>

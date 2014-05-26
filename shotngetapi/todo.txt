@@ -1,0 +1,12 @@
+*************************
+todo certphoneapi:
+*************************
+
+=> bug du timeout dés le début de l'affichage de la page
+
+=> modifier la cmdPay (voir specif) => 2 cmd séparées pour la gestion des paiements ...
+
+=> faire les dernières page d'exemples (ad + pay): requestmanager et page de redirection.
+
+=> mise en place de la fonction de chiffrement des données pour envoyer au téléphone.
+=> le biclé serveur est dans un fichier, généré la première fois si n'éxiste pas.

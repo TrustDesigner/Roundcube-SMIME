@@ -1,0 +1,62 @@
+<?php
+
+if(isset($init_flag) == false)
+	die;
+	
+/**
+* Display a web page at user mobile screen spécified by the command url.
+**/
+class CCmdUrl extends CCmd {
+	// ********************************************************************************************
+	/** The web page url */
+	private $url;
+	
+	// ********************************************************************************************
+	/**
+	* Initialize the comand.
+	* @param string $key: identifier for the comand.
+	* @param string $url the web page url.
+	**/
+	public function __construct($url) {
+		parent::setValue(CCmd::CMD_URL);
+		
+		CDebugger::$debug->tracein('__construct', 'CCmdUrl');
+		
+		$this->url = $url;
+		
+		CDebugger::$debug->traceout(true);
+	}
+	
+	public function fromXml($node){
+		CDebugger::$debug->tracein('fromXml', 'CCmdUrl');
+		
+		$xmlUrl = $node->getElementsByTagName('URL')->item(0);
+		$url = utf8_decode($xmlUrl->firstChild->nodeValue);
+		$this->url = $url;
+		
+		CDebugger::$debug->traceout(true);
+	}
+	
+	// ********************************************************************************************
+	public function serializer(&$dom, $kpub){
+		CDebugger::$debug->tracein('serializer', 'CCmdUrl');
+		
+		$xmlCmd = $dom->createElement('CMD');
+		$xmlCmd->setAttribute('VALUE', parent::getValue());
+		
+		$xmlUrl = $dom->createElement('URL');
+		$url = utf8_encode($this->getUrl());
+		$xmlUrl->appendChild($dom->createTextNode($url));
+		$xmlCmd->appendChild($xmlUrl);
+		
+		CDebugger::$debug->traceout(true);
+		return $xmlCmd;
+	}
+	
+	// ********************************************************************************************
+	public function getUrl() { return $this->url; }
+	public function setUrl($url) { $this->url = $url; }
+	
+}
+
+?>

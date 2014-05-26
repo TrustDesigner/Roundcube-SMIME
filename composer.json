@@ -1,0 +1,22 @@
+{
+    "name": "roundcube/shotnget_smime",
+    "type": "roundcube-plugin",
+    "description": "Plugin to send s/mime messages and connect with the smarphone application ShotNGet",
+    "license": "GNU GPLv3+",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Trust Designer",
+            "email": "jdusotois@trustdesigner.com",
+            "role": "Lead"
+        },
+	{
+	    "name": "Tourte Alexis",
+	    "role": "Developer"
+	}
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "roundcube/plugin-installer": ">=0.1.3"
+    }
+}

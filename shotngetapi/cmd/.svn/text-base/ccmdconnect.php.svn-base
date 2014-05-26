@@ -1,0 +1,212 @@
+<?php
+
+if(isset($init_flag) == false)
+	die;
+	
+/**
+* This comand ask a web account formated using a file template.
+* Have to specifiate type & password size.
+**/
+class CCmdConnect extends CCmd {
+	// ********************************************************************************************
+	private $kpub;
+	private $kpri;
+	
+	private $os;
+	private $model;
+	
+	private $img;
+	private $imgData;
+	
+	private $useLogo;
+	
+	private $pub;
+	
+	private $multiCmds;
+	
+	// ********************************************************************************************
+	/**
+	* Initalize the comand
+	*/
+	public function __construct() {
+		parent::setValue(CCmd::CMD_CONNECT);
+		
+		CDebugger::$debug->tracein('__construct', 'CCmdConnect');
+		
+		$this->useLogo = true;
+		
+		CDebugger::$debug->traceout(true);
+	}
+	
+	public function fromXml($node){
+		CDebugger::$debug->tracein('fromXml', 'CCmdConnect');
+		
+		$xmlKpub = $node->getElementsByTagName('KPUB');
+		if($xmlKpub->length == 1 && $xmlKpub->item(0)->firstChild != null)
+		{
+			$kpub = utf8_decode($xmlKpub->item(0)->firstChild->nodeValue);
+			$this->kpub = $kpub;
+		}
+		
+		$xmlKpri = $node->getElementsByTagName('KPRI');
+		if($xmlKpri->length == 1 && $xmlKpri->item(0)->firstChild != null)
+		{
+			$kpri = utf8_decode($xmlKpri->item(0)->firstChild->nodeValue);
+			$this->kpri = $kpri;
+		}
+		
+		$xmlOs = $node->getElementsByTagName('OS')->item(0);
+		$os = utf8_decode($xmlOs->firstChild->nodeValue);
+		$this->os = $os;
+		
+		$xmlModel = $node->getElementsByTagName('MODEL')->item(0);
+		$model = utf8_decode($xmlModel->firstChild->nodeValue);
+		$this->model = $model;
+		
+		$xmlImg = $node->getElementsByTagName('IMG');
+		if($xmlImg->length == 1 && $xmlImg->item(0)->firstChild != null)
+		{
+			$img = utf8_decode($xmlImg->item(0)->firstChild->nodeValue);
+			$this->img = $img;
+		}
+		
+		$xmlImgData = $node->getElementsByTagName('IMGDATA');
+		if($xmlImgData->length == 1 && $xmlImgData->item(0)->firstChild != null)
+		{
+			$this->imgData = $xmlImgData->item(0)->firstChild->nodeValue;
+		}
+    
+		$xmlVer = $node->getElementsByTagName('VER');
+		if($xmlVer->length == 1 && $xmlVer->item(0)->firstChild != null)
+		{
+		  	//trace2('ver='.$xmlVer->item(0)->firstChild->nodeValue);
+	  	}
+		
+		//trace2('before uselogo');
+		if($node->getElementsByTagName('USELOGO')->length != 0) {
+			$xmlUseLogo = $node->getElementsByTagName('USELOGO')->item(0);
+			$useLogo = $xmlUseLogo->firstChild->nodeValue;
+			//trace2("uselogo=".$useLogo);
+		}
+		else {
+			$useLogo = 1;
+    		//trace2("nouselogo");
+    	}
+		
+		if($useLogo == 0)
+			$this->useLogo = false;
+		else
+			$this->useLogo = true;
+		
+		$xmlPub = $node->getElementsByTagName('PUB');
+		if($xmlPub->length == 1 && $xmlPub->item(0)->firstChild != null)
+		{
+			$pub = utf8_decode($xmlPub->item(0)->firstChild->nodeValue);
+			$this->pub = $pub;
+		}
+		
+		$xmlMultiCmds = $node->getElementsByTagName('MULTICMDS');
+		if($xmlMultiCmds->length == 1 && $xmlMultiCmds->item(0)->firstChild != null)
+		{
+			$this->multiCmds = $xmlMultiCmds->item(0)->firstChild->nodeValue;
+		}
+		
+		CDebugger::$debug->traceout(true);
+	}
+	
+	// ********************************************************************************************
+	public function serializer(&$dom, $kpub){
+		CDebugger::$debug->tracein('serializer', 'CCmdConnect');
+		
+		$xmlCmd = $dom->createElement('CMD');
+		$xmlCmd->setAttribute('VALUE', parent::getValue());
+		
+		if($this->kpub != null){
+			$xmlKpub = $dom->createElement('KPUB');
+			$kpub = utf8_encode($this->getKpub());
+			$xmlKpub->appendChild($dom->createTextNode($kpub));
+			$xmlCmd->appendChild($xmlKpub);
+		}
+		
+		if($this->kpri != null){
+			$xmlKpri = $dom->createElement('KPRI');
+			$kpri = utf8_encode($this->getKpri());
+			$xmlKpri->appendChild($dom->createTextNode($kpri));
+			$xmlCmd->appendChild($xmlKpri);
+		}
+		
+		if($this->os != null){
+			$xmlOs = $dom->createElement('OS');
+			$os = utf8_encode($this->getOs());
+			$xmlOs->appendChild($dom->createTextNode($os));
+			$xmlCmd->appendChild($xmlOs);
+		}
+		
+		if($this->model != null){
+			$xmlModel = $dom->createElement('MODEL');
+			$model = utf8_encode($this->getModel());
+			$xmlModel->appendChild($dom->createTextNode($model));
+			$xmlCmd->appendChild($xmlModel);
+		}
+		
+		if($this->img != null){
+			$xmlImg = $dom->createElement('IMG');
+			$img = utf8_encode($this->getImg());
+			$xmlImg->appendChild($dom->createTextNode($img));
+			$xmlCmd->appendChild($xmlImg);
+		}
+		
+		if($this->imgData != null){
+			$xmlImgData = $dom->createElement('IMGDATA');
+			$xmlImgData->appendChild($dom->createTextNode($this->getImgData()));
+			$xmlCmd->appendChild($xmlImgData);
+		}
+		
+		if($this->pub != null){
+			$xmlPub = $dom->createElement('PUB');
+			$pub = utf8_encode($this->getPub());
+			$xmlPub->appendChild($dom->createTextNode($pub));
+			$xmlCmd->appendChild($xmlPub);
+		}
+		
+		if($this->multiCmds != null){
+			$xmlMultiCmds = $dom->createElement('MULTICMDS');
+			$multiCmds = utf8_encode($this->multiCmds);
+			$xmlMultiCmds->appendChild($dom->createTextNode($multiCmds));
+			$xmlCmd->appendChild($xmlMultiCmds);
+		}
+		
+		CDebugger::$debug->traceout(true);
+		return $xmlCmd;
+	}
+	
+	// ********************************************************************************************
+	public function getKpub() { return $this->kpub; }
+	public function setKpub($kpub) { $this->kpub = $kpub; }
+	
+	public function getKpri() { return $this->kpri; }
+	public function setKpri($kpri) { $this->kpri = $kpri; }
+	
+	public function getOs() { return $this->os; }
+	public function setOs($os) { $this->os = $os; }
+	
+	public function getModel() { return $this->model; }
+	public function setModel($model) { $this->model = $model; }
+	
+	public function getImg() { return $this->img; }
+	public function setImg($img) { $this->img = $img; }
+	
+	public function getImgData() { return $this->imgData; }
+	public function setImgData($imgData) { $this->imgData = $imgData; }
+	
+	public function getPub() { return $this->pub; }
+	public function setPub($pub) { $this->pub = $pub; }
+	
+	public function isUseLogo() { return $this->useLogo; }
+	public function setUseLogo($useLogo) { $this->useLogo = $useLogo; }
+	
+	public function getMultiCmds() { return $this->multiCmds; }
+
+}
+
+?>

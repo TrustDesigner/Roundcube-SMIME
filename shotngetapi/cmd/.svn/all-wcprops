@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/certphone/!svn/ver/197/Proxy/trunk/shotngetapi/cmd
+END
+ccmdcgv.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdcgv.php
+END
+ccmd.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmd.php
+END
+ccmdcbc.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/certphone/!svn/ver/197/Proxy/trunk/shotngetapi/cmd/ccmdcbc.php
+END
+ccmdpay.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdpay.php
+END
+ccmddisconnect.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmddisconnect.php
+END
+ccmdconnect.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmdconnect.php
+END
+ccmdplugin.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmdplugin.php
+END
+ccmdpayconf.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdpayconf.php
+END
+ccmdauth.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdauth.php
+END
+ccmdurl.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdurl.php
+END
+ccmds.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmds.php
+END
+ccmdinit.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/certphone/!svn/ver/193/Proxy/trunk/shotngetapi/cmd/ccmdinit.php
+END
+ccmdresp.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdresp.php
+END
+ccmdread.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/certphone/!svn/ver/139/Proxy/trunk/shotngetapi/cmd/ccmdread.php
+END
+ccmdlist.php
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/certphone/!svn/ver/180/Proxy/trunk/shotngetapi/cmd/ccmdlist.php
+END

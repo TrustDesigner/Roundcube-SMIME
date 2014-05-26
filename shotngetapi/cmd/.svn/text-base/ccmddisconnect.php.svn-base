@@ -1,0 +1,88 @@
+<?php
+
+if(isset($init_flag) == false)
+	die;
+	
+/**
+* This comand ask a web account formated using a file template.
+* Have to specifiate type & password size.
+**/
+class CCmdDisconnect extends CCmd {
+	// ********************************************************************************************
+	private $result;
+	private $url;
+	private $msg;
+	
+	// ********************************************************************************************
+	public function __construct() {
+		parent::setValue(CCmd::CMD_DISCONNECT);
+		
+		CDebugger::$debug->tracein('__construct', 'CCmdDisconnect');
+		CDebugger::$debug->traceout(true);
+	}
+	
+	public function fromXml($node){
+		CDebugger::$debug->tracein('fromXml', 'CCmdDisconnect');
+		
+		$xmlResult = $node->getElementsByTagName('RESULT')->item(0);
+		$result = utf8_decode($xmlResult->firstChild->nodeValue);
+		$this->result = $result;
+		
+		$xmlUrl = $node->getElementsByTagName('URL')->item(0);
+		$url = utf8_decode( $xmlUrl->firstChild->nodeValue);
+		$this->url =$url;
+		
+		$xmlMsg = $node->getElementsByTagName('MSG')->item(0);
+		$msg = utf8_decode($xmlMsg->firstChild->nodeValue);
+		$this->msg = $msg;
+		
+		CDebugger::$debug->traceout(true);
+	}
+	
+	// ********************************************************************************************
+	public function serializer(&$dom, $kpub){
+		CDebugger::$debug->tracein('serializer', 'CCmdDisconnect');
+		
+		$xmlCmd = $dom->createElement('CMD');
+		$xmlCmd->setAttribute('VALUE', parent::getValue());
+		
+		if($this->result != null){
+			$xmlResult = $dom->createElement('RESULT');
+			$result = utf8_encode($this->getResult());
+			$xmlResult->appendChild($dom->createTextNode($result));
+			$xmlCmd->appendChild($xmlResult);
+		}
+		
+		if($this->url != null){
+			$xmlUrl = $dom->createElement('URL');
+			$url = utf8_encode($this->getUrl());
+			$xmlUrl->appendChild($dom->createTextNode($url));
+			$xmlCmd->appendChild($xmlUrl);
+		}
+		
+		if($this->msg != null){
+			$xmlMsg = $dom->createElement('MSG');
+			$msg = utf8_encode($this->getMsg());
+			$xmlMsg->appendChild($dom->createTextNode($msg));
+			$xmlCmd->appendChild($xmlMsg);
+		}
+		
+		CDebugger::$debug->traceout(true);
+		return $xmlCmd;
+	}
+	
+	// ********************************************************************************************
+	
+	// ********************************************************************************************
+	public function getResult() { return $this->result; }
+	public function setResult($result) { $this->result = $result; }
+	
+	public function getUrl() { return $this->url; }
+	public function setUrl($url) { $this->url = $url; }
+	
+	public function getMsg() { return $this->msg; }
+	public function setMsg($msg) { $this->msg = $msg; }
+	
+}
+
+?>

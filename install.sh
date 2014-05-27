@@ -103,7 +103,7 @@ if [ ! -d "$tempDir/certphone" ] || [ "$sendMail" == "true" ]; then
 	echo -e "Manage files in $tempDir/certphone"
 	mv "shotnget_sign_engine.so" "$tempDir/certphone/"
 	# Put right to the file
-	chmod 640 "$tempDir/certphone/kpri"
+	chmod 644 "$tempDir/certphone/kpri"
 	chown www-data:www-data "$tempDir/certphone/temp"
 	chown www-data:www-data "$tempDir/certphone/Keys"
 	chown www-data:www-data "$tempDir/certphone/Certificates"

@@ -81,7 +81,6 @@ class CFile {
 		
 
 		/* $id = $node->getAttribute('ID'); */
-		/* file_put_contents("/usr/test/test.txt", "ID : ".$id."\n", FILE_APPEND); */
 
 		/* if($id != false) { */
 		/*   //$id = $node->getAttribute('ID');//utf8_decode($node->getAttribute('ID')); */

@@ -1,26 +1,13 @@
 <?php
 /**
- * Shotnget SMIME / shotnget_sign
+ * Shotnget Mail / shotnget_sign
  *
- * Class used to perform signature and verify it
+ * Class used to perform the signature
+ * Signature can be performed by openssl or shotnget
  *
  * @version 1.0
- *
- * shotnget_smime is a roundcube plugin used for SMIME signature / decipherment and connections
- * Copyright (C) 2007-2014 Trust Designer, Tourte Alexis
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * @author Trust Designer, Tourte Alexis
+ * @url
  */
 
 require_once('mail.php');
@@ -97,7 +84,7 @@ class shotnget_sign {
     file_put_contents($cert, $cert_content);
 
     // Save certificate for encryption later
-    file_put_contents(shotnget_certificate::get_certificate($mail), $cert_content);
+    file_put_contents(shotnget_certificate::get_encrypt_certificate($mail), $cert_content);
 
     $params = $file->getParams();
     foreach ($params as $param) {
@@ -319,7 +306,7 @@ class shotnget_sign {
 	$ret = file_get_contents($fullmessage);
 
 	if (openssl_x509_checkpurpose($data, X509_PURPOSE_SMIME_ENCRYPT) == true)
-	  file_put_contents(shotnget_certificate::get_certificate($this->myMail), $x509cert);
+	  file_put_contents(shotnget_certificate::get_encrypt_certificate($this->myMail), $x509cert);
 
 	@unlink($mailCertFile);
         @unlink($fullmessage);

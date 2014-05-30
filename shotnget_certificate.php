@@ -1,26 +1,12 @@
 <?php
 /**
- * Shotnget SMIME / shotnget_certificate
+ * Shotnget Mail / shotnget_certificate
  *
- * Class used to perform actions on certificates
+ * This class is used for certificates function
  *
  * @version 1.0
- *
- * shotnget_smime is a roundcube plugin used for SMIME signature / decipherment and connections
- * Copyright (C) 2007-2014 Trust Designer, Tourte Alexis
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * @author Trust Designer, Tourte Alexis
+ * @url
  */
 
 class shotnget_certificate {
@@ -81,6 +67,19 @@ class shotnget_certificate {
   }
 
   /**
+   * Function to get the path to the encrypt certificate of a given user
+   * @param $address Mail adress of a user
+   * @param $has_prepend add file:// at the begining of the path
+   * @return The path to the private key of the given user
+   */
+  public static function get_encrypt_certificate($address, $has_prepend = false) {
+    $folder = rcmail::get_instance()->config->get('certificate_path');
+    $prepend = "file://";
+    return ($has_prepend == true ? $prepend : "").$folder.$address."_encrypt.pem";
+  }
+
+
+  /**
    * Function to get the path to the extra certificate of a given user
    * @param $address Mail adress of a user
    * @param $has_prepend add file:// at the begining of the path
@@ -116,7 +115,7 @@ class shotnget_certificate {
       if (openssl_x509_checkpurpose($cert_content, X509_PURPOSE_SMIME_ENCRYPT) == true) {
         $deserialized = openssl_x509_parse($cert_content);
         if ($deserialized['sbject']['emailAddress'] == $mail) {
-          file_put_contents(shotnget_certificate::get_certificate($mail), $cert_content);
+          file_put_contents(shotnget_certificate::get_encrypt_certificate($mail), $cert_content);
           break;
         }
       }

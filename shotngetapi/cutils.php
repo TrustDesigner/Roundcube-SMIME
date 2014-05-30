@@ -54,7 +54,7 @@ class CUtils{
 	* @param string $rand the rand value
 	*/
 	public static function cleanTempFiles($apiParameters, $rand){
-		$randPath = $apiParameters->getConf()->getRandPath();
+		$randPath = Config::$TEMP_PATH;
 		$filename = $randPath.$rand;
 		$userData = CUtils::getUserData($randPath, $rand);
 		
@@ -72,16 +72,9 @@ class CUtils{
 			
 		if (file_exists($filename.'.data'))
 			unlink($filename.'.data'); //supprime le fichier .data
-		
-		$filename = $apiParameters->getTempPath().$userData->qrcode_img_name;
-		
-		if (file_exists($filename) && is_dir($filename) == false)
-			unlink($filename); //supprime l'image du qr code
-			
-		
+
 		$maxTime = 5 * 60; //seconds
-		CUtils::deleteOldFiles($apiParameters->getTempPath(), $maxTime);
-		CUtils::deleteOldFiles($apiParameters->getConf()->getRandPath(), $maxTime);
+		CUtils::deleteOldFiles($randPath, $maxTime);
 	}
 	
 	/**
